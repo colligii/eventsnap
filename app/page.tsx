@@ -1,8 +1,11 @@
-import Image from "next/image";
-import LoginBtn from "./components/login-btn";
+import { Main as MainComponent } from "./components/index-page/main";
+import { Header } from "./components/header";
 
 export default function Home() {
   return (
-    <LoginBtn/>
+    <>
+      <Header/>
+      <MainComponent/>
+    </>
   );
 }
