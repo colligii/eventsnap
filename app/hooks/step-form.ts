@@ -2,13 +2,20 @@ import { useEffect, useRef, useState } from "react";
 
 export default function useStepForm<T>(
     submit: (step: number, form: T, handleNextStep: HandleNextStepFn) => void
-): [T, number, VoidFn, UpdateFormFn, VoidFn] {
+): [T, number, VoidFn, UpdateFormFn, VoidFn, VoidFn] {
     const form = useRef<T>({} as T);
 
     const [step, setStep] = useState(1);
 
     const handleNextStep = () => {
         setStep(step => step + 1);
+    }
+
+    const lastStep = () => {
+        if(step <= 1)
+            return;
+
+        setStep(step => step - 1);
     }
 
     const handleSubmit = () => {
@@ -29,7 +36,7 @@ export default function useStepForm<T>(
         return () => document.removeEventListener('keypress', submitKeyBoard)
     }, [])
 
-    return [form.current as T, step, handleNextStep, updateForm, () => handleSubmit()]
+    return [form.current as T, step, handleNextStep, updateForm, handleSubmit, lastStep]
 }
 
 

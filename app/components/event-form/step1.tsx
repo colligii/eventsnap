@@ -4,7 +4,7 @@ import React, { FormEvent } from "react"
 import { motion } from 'motion/react'
 import { UpdateFormFn } from "@/app/hooks/step-form"
 
-export const Step1 = ({ updateForm, submit }: Step1Props) => {
+export const Step1 = ({ updateForm, defaultName }: Step1Props) => {
 
     const handleKeyChanges = (event: FormEvent<HTMLInputElement>) => {
         const input = event.target as HTMLInputElement;
@@ -19,17 +19,12 @@ export const Step1 = ({ updateForm, submit }: Step1Props) => {
             className="flex flex-col gap-3 items-center"
         >
             <h3 className="font-semibold">Como podemos nomear o seu evento?</h3>
-            <div className="flex gap-2">
-                <Input required={true} onInput={handleKeyChanges} type="text" placeholder="Nome do evento" />
-                <Button onClick={submit} type="submit" variant="outline">
-                    Continuar
-                </Button>
-            </div>
+            <Input defaultValue={defaultName} required={true} onInput={handleKeyChanges} type="text" placeholder="Nome do evento" className="w-full"/>
         </motion.div>
     )
 }
 
 export interface Step1Props {
+    defaultName: string;
     updateForm: UpdateFormFn,
-    submit: () => any
 }

@@ -1,9 +1,20 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import React from "react"
+import React, { FormEvent } from "react"
 import { motion } from 'motion/react'
+import { UpdateFormFn } from "@/app/hooks/step-form"
 
-export const Step1 = ({ inputRef, submit }: Step1Props) => {
+export const Step2 = ({ updateForm, defaultSections }: Step1Props) => {
+
+    const handleKeyChanges = (event: FormEvent<HTMLInputElement>) => {
+        const input = event.target as HTMLInputElement;
+        const sections = Number(input.value);
+        if (!input.value?.length && isNaN(sections))
+            return;
+
+        updateForm({ sections })
+    }
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -11,18 +22,14 @@ export const Step1 = ({ inputRef, submit }: Step1Props) => {
             transition={{ duration: 0.5 }}
             className="flex flex-col gap-3 items-center"
         >
-            <h3 className="font-semibold">Como podemos nomear o seu evento?</h3>
-            <div className="flex gap-2">
-                <Input required={true} ref={inputRef} type="text" placeholder="Nome do evento" />
-                <Button onClick={submit} type="submit" variant="outline">
-                    Continuar
-                </Button>
-            </div>
+            <h3 className="font-semibold">Quantas sessões você gostaria de ter?</h3>
+            <Input defaultValue={defaultSections} required={true} onInput={handleKeyChanges} type="number" placeholder="Ex: 12" className="w-full" />
+
         </motion.div>
     )
 }
 
 export interface Step1Props {
-    inputRef: React.Ref<HTMLInputElement>,
-    submit: () => any
+    updateForm: UpdateFormFn,
+    defaultSections: number;
 }
