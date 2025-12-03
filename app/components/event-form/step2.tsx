@@ -9,10 +9,11 @@ export const Step2 = ({ updateForm, defaultSections }: Step1Props) => {
     const handleKeyChanges = (event: FormEvent<HTMLInputElement>) => {
         const input = event.target as HTMLInputElement;
         const sections = Number(input.value);
+        console.log(sections)
         if (!input.value?.length && isNaN(sections))
             return;
 
-        updateForm({ sections })
+        updateForm({ sections, files: [] })
     }
 
     return (

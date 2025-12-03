@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function useStepForm<T>(
-    submit: (step: number, form: T, handleNextStep: HandleNextStepFn) => void
+    submit: (step: number, form: T, handleNextStep: HandleNextStepFn) => void,
+    defaultForm?: Partial<T>
 ): [T, number, VoidFn, UpdateFormFn, VoidFn, VoidFn] {
-    const form = useRef<T>({} as T);
+    const form = useRef<T>((defaultForm ?? {}) as T);
 
     const [step, setStep] = useState(1);
 
