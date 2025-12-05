@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { motion } from 'motion/react';
 import { Step2 } from "./step2"
 import { Step3 } from "./step3"
+import { ImageCropStepProps } from "../image-crop"
 
 export const Form = () => {
     const [form, step, _, updateForm, submit, lastStep] = useStepForm<Form>((step, form, handleNextStep) => {
@@ -15,11 +16,27 @@ export const Form = () => {
         if(step === 2 && (!form.sections || isNaN(form.sections)))
             return;
 
-        if (step > 2 && step <= 2 + (form.sections ?? 1) && !form.files[step - 3])
+        if (step > 2 && step <= 2 + (form.sections ?? 1) && (!form.files?.length || !form.files[step - 3])) {
+
+            form.files = form.files ?? [];
+
+            if(originalImgFile.current && imageStep === 'selecting') {
+                setImageStep('end');
+                return;
+            }
+
+
+            setImageStep('confirm');
+            
+
             return;
+        }
 
         handleNextStep();
-    }, { sections: 1 })
+    }, { sections: 1 });
+
+    const [imageStep, setImageStep] = useState<ImageCropStepProps>('selecting')
+    const originalImgFile = useRef<File>(null);
     let element;
 
     if (step === 1) {
@@ -27,7 +44,7 @@ export const Form = () => {
     } else if (step === 2) {
         element = <Step2 updateForm={updateForm} defaultSections={form.sections ?? 1}></Step2>;
     } else if (step > 2 && step <= 2 + (form.sections ?? 1)) {
-        element = <Step3 updateForm={updateForm} sectionNumber={step - 2}></Step3>
+        element = <Step3 updateForm={updateForm} sectionNumber={step - 2} step={imageStep} originalFile={originalImgFile}></Step3>
     }
 
     return (
