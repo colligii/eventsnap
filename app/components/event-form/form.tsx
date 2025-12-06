@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { motion } from 'motion/react';
 import { Step2 } from "./step2"
 import { Step3 } from "./step3"
-import { ImageCropStepProps } from "../image-crop"
+import { ImageCropStepProps } from "../image-crop/types"
 
 export const Form = () => {
     const [form, step, _, updateForm, submit, lastStep] = useStepForm<Form>((step, form, handleNextStep) => {

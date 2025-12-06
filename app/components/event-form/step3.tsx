@@ -4,7 +4,8 @@ import React, { FormEvent, useRef, useState } from "react"
 import { motion } from 'motion/react'
 import { UpdateFormFn } from "@/app/hooks/step-form"
 import { Label } from "@/components/ui/label"
-import { ImageCrop, ImageCropStepProps } from "../image-crop"
+import { ImageCropStepProps } from "../image-crop/types"
+import { ImageCrop } from "../image-crop"
 
 export const Step3 = ({ updateForm, sectionNumber, originalFile, step }: Step3Props) => {
     const [file, setFile] = useState<File | null>(null);
@@ -64,9 +65,9 @@ export const Step3 = ({ updateForm, sectionNumber, originalFile, step }: Step3Pr
                 }}
                 sizeConfig={{
                     sm: { maxWidth: 380, maxHeight: 380 },
-                    md: { maxWidth: 480, maxHeight: 480 },
-                    xmd: { maxWidth: 780, maxHeight: 780 },
-                    lg: { maxWidth: 980, maxHeight: 980 }
+                    md: { maxWidth: 480, maxHeight: 380 },
+                    xmd: { maxWidth: 780, maxHeight: 380 },
+                    lg: { maxWidth: 980, maxHeight: 380 }
                 }}
             ></ImageCrop>
         </motion.div>
